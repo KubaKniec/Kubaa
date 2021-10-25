@@ -10,7 +10,6 @@ std :: getline ( std :: cin , value );
 return std :: stoi ( value );
 }
 
-using namespace std;
 int suma;
 
 
