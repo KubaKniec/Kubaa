@@ -1,55 +1,30 @@
-# include <iostream>
-# include <string>
-auto zapytaj ( std :: string const prompt ) -> int
+#include <iostream>
+#include <string>
+auto zapytaj(std::string) -> int;
+auto main() -> int
 {
-if ( not prompt . empty ()) {
-std :: cout << prompt ;
-}
-auto value = std :: string {};
-std :: getline ( std :: cin , value );
-return std :: stoi ( value );
-}
-
-int puste;
-
-auto main () -> int
+auto const y = zapytaj("y = ");
+int i;
+for (i= 1; y>=i; i++)
 {
-
-        auto const b=zapytaj("podaj wysokosc: ");
-
-
-        for(int y=0;y<b;y++)
-        {
-
-                for(int i=0;i<b;i++)
-                {
-			if(i==1)
-			{
-                        	std::cout<<"*";
-			}
-			else
-			{
-				puste=b-2;
-				std::cout<<"*";
-
-				for(int z=0;z<=puste;z++)
-				{
-					std::cout<<" ";
-				}
-				std::cout<<"*";
-			}
-                }
-
-
-
-
-        std::cout<<"\n";
-        }
-
-
-
-
-return 0;
+int j;
+for (j= 1;j<=y; j++)
+{
+if (j==1 || j==y) 
+std::cout << "*";
+else if (i==1 || i==y)
+std::cout << "*";
+else
+std::cout << " ";
 }
-
-
+std::cout << "\n";
+}
+    return 0;
+}
+auto zapytaj(std::string prompt) -> int
+{
+    std::cout << prompt << " int:";
+    auto n = std::string{};
+    std::getline(std::cin, n);
+    return std::stoi(n);
+}
