@@ -16,20 +16,16 @@ auto search(int a[], int n, int needle) -> int
     for(int i=0;i<n;i++){
         if(needle == a[i]){
             std::cout << "Twoja liczba ma indeks: " << i;
-            return 1;
+            return i;
         }
-        else if(i==n-1){
-             std::cout << "W tablicy nie ma takiej liczby :(";
-             return -1;
         }
+        std::cout << "W tablicy nie ma takiej liczby :(";
+        return -1;
     }
-}
-
 
 
 
 int liczba = 0;
-
 
 auto main() -> int
 {
@@ -37,9 +33,9 @@ auto main() -> int
 
     auto const liczba = zapytaj("Podaj szukana liczbe: ");
 
-    search(tab,10,liczba);
+
+    int x = search(tab,10,liczba);
 
 
 return 0;
 }
-
