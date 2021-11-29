@@ -3,16 +3,6 @@
 #include <algorithm>
 
 
-auto zapytaj (std::string const prompt) -> int
-{
-if (not prompt.empty()) {
-std::cout << prompt ;
-}
-auto value = std::string {};
-std::getline (std::cin , value);
-return std::stoi (value);
-}
-
 auto amax(int a[], int n) -> int
 {
     n = 10;
