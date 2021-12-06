@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <iostream>
 
 auto sort_asc(int a[], int n) -> void
