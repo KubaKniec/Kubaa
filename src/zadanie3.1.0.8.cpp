@@ -1,20 +1,25 @@
-#include<iostream>
-#include<algorithm>
+#include <algorithm>
+#include <iostream>
 
-
-bool porownaj(int a, int b)
+auto sort_asc(int a[], int n) -> void
 {
-	return a>b;
+    for(int i=0; i<n; i++)
+    {
+        for(int j=1; j<n-i; j++)
+            if(a[j-1]<a[j])         //wystarczylo zmienic znak z '>' na '<'
+            {
+                int temp = a[j];
+                a[j] = a[j-1];
+                a[j-1] = temp;
+            }
+    }
+    for(int i=0; i<n; i++)
+        std::cout<<a[i]<<" ";
 }
 
 auto main() -> int
 {
-	int tab[] =  { 42 , 9 , -1 , 18 , 59 , 3 , 101 , 31 , 72 , 12 };
-
-	std::sort(tab, tab+10, porownaj);
-
-	for(int i=0;i<10;i++)
-        std::cout<<tab[i]<<' ';
-
-	return 0;
+    int tab[] = { 42, 9, -1, 18, 59, 3, 101, 31, 72, 12 };
+    sort_asc(tab,10);
+    return 0;
 }
