@@ -1,3 +1,6 @@
+//stara wersja gry, usunac potem, na razie zostawiam, moze sie przyda
+
+
 #include <iostream>
 #include <string>
 #include "windows.h"
