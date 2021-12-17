@@ -2,8 +2,11 @@
 #include <string>
 #include "windows.h"
 
+
+
 /*                                                                 TO DO List
 
+- funkcja wyswietlenia statystyk (DONE)
 - Funkcja walki
 - Funkcja LVL Up. Odnawia zycie i mozesz dodac iles tam punktow do obrony lub ataku
 - Kilka dodatkowych przeciwnikow
@@ -86,8 +89,7 @@ auto Decyzja(std::string x, std::string y) -> std::string
 
 
 
-
-// struktura postac //
+// struktura postac golwnej oraz przeciwnikow (maja takie same parametry) //
 struct postac
 {
     int health;
@@ -96,11 +98,22 @@ struct postac
 
 };
 
+std::string imie;
 
+auto Walka()-> int
+{
+    std::cout << "tutaj bedzie walka";
+}
 
+auto PrintStats(postac struktura, postac strukturaPrzeciwnik) -> void
+{
+    std::cout << "|Twoje statystyki"<< "      |Statystyki przeciwnika" << std::endl;
+    std::cout << "|  Zdrowie: " << struktura.health << "        |     Zdrowie: " << strukturaPrzeciwnik.health << std::endl;
+    std::cout << "|  Atak: " << struktura.attack<< "             |     Atak: " << strukturaPrzeciwnik.attack << std::endl;
+    std::cout << "|  Obrona: " << struktura.defense << "           |     Obrona: " << strukturaPrzeciwnik.defense << std::endl;
+}
 
-
-
+//auto LvlUp (postac st)
 auto main() -> int
 {
 
@@ -112,7 +125,7 @@ auto main() -> int
     }
 
     // WPROWADZENIE //
-    std::string imie;
+
     std::cout << "Podaj imie swojej postaci (jeden wyraz)\n>> ";
     std::cin >>  imie;
     std::cout << "Pora ustawic statystyki twojej postaci\n\n";
@@ -155,7 +168,7 @@ auto main() -> int
 
 
     system("cls");
-    int x = 1;                                          // USTAWIC FINALNIE x = 3 !!!!!!!!!!!!!!!!!!!!!
+    int x = 0;  //czas pauzy w sekundach                                        // USTAWIC FINALNIE x = 3 !!!!!!!!!!!!!!!!!!!!!
 
     std::cout << "    Rozdzial 1\n\n\n";
     Pauza(x);
@@ -179,6 +192,11 @@ auto main() -> int
     std::cout << "Z morku wylania sie Goblin. Niebezpieczna i smierdzaca postac zamieszkujaca te lochy\n\n";
     Pauza(x);
     std::cout << "Czy " << imie << " pokona Goblina?  Przekonajmy sie!\n\n";
+    system("pause");
+    system("cls");
+    PrintStats(gracz, goblin);
+
+
 
 
     return 0;
