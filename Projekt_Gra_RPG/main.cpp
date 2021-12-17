@@ -115,12 +115,12 @@ auto main() -> int
 
     // WPROWADZENIE //
     std::string imie;
-    std::cout << "Podaj imie swojej postaci\n>> ";
+    std::cout << "Podaj imie swojej postaci (jeden wyraz)\n>> ";
     std::cin >>  imie;
     std::cout << "Pora ustawic statystyki twojej postaci\n\n";
     system("pause");
     system("cls");
-    int atak, obrona, punkty = 10;
+    int atak = 0, obrona = 0, punkty = 10;
     std::cout << "Masz do dyspozycji 10 punktow umiejetnosci, rozdziel je madrze\n";
     std::cout << "Masz dostepne 2 glowne statystyki atak oraz obrone\nIle chcesz dac w atak: ";
     std::cin >> atak;
@@ -161,15 +161,15 @@ auto main() -> int
 
     std::cout << "    Rozdzial 1\n\n\n";
     Pauza(x);
-    std::cout << imie <<" budzi sie na zimnej, kamiennej pryczy.\n\n";
+    std::cout << imie <<" budzi sie na zimnej, kamiennej podlodze.\n\n";
     Pauza(x);
     std::cout << "Do okola jest ciemno i nic nie widac.\n\n";
     Pauza(x);
-    std::cout << "Po chwili oczy przyzwyczajaja sie do ciemnosci i "<< imie << " zauwaza, ze jest w  jakiejs celi\n\n";
+    std::cout << "Po chwili oczy przyzwyczajaja sie i "<< imie << " zauwaza, ze jest w  jakiejs celi\n\n";
     Pauza(x);
     std::cout << "Dostrzega, ze kraty sa uszkodzone i da sie przez nie wyjsc.\n\n";
     Pauza(x);
-    std::cout << imie << " bierze ze soba kawalek kraty i postanawia uciec i tu zaczyna sie przygoda.\n\n";
+    std::cout << imie << " bierze ze soba kawalek metalowej kraty i postanawia uciec, tu zaczyna sie przygoda.\n\n";
     Pauza(x);
     std::cout << "Czy ucieczka sie powiedzie? To zalezy tylko od ciebie. Daj z siebie 101%\n\n";
     system("pause");
