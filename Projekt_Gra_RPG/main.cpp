@@ -2,8 +2,6 @@
 #include <string>
 #include "windows.h"
 
-
-
 /*                                                                 TO DO List
 
 - Funkcja walki
