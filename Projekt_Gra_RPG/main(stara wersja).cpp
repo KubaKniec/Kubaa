@@ -144,5 +144,3 @@ string decyzja(string x,string y)
         }
     }
 }
-
-
