@@ -7,17 +7,19 @@
 /*                                                                 TO DO List
 
 - funkcja wyswietlenia statystyk (DONE)
-- Funkcja walki
-- Funkcja LVL Up. Odnawia zycie i mozesz dodac iles tam punktow do obrony lub ataku
-- Kilka dodatkowych przeciwnikow
+- Funkcja walki (DONE)
+- Funkcja LVL Up. Odnawia zycie i mozesz dodac iles tam punktow do obrony lub ataku (DONE)
+- Kilka dodatkowych przeciwnikow (DONE)
+- Ustawić statystyki przeciwnikow tak aby dalo sie wygrac i przegrac (nie moze byc za latwo :))
 - Pomiedzy walkami jakis event w stylu znalazles skrzynke czy chcesz ja otworzyc? A w srodku jakis super przedmiot czy cos tam nw jeszcze
+        Moze cos w stylu funkcji bonus event czy cos ale najpierw zrobic rzeczy wazne !
 
 */
 
 
 auto MenuGlowne() -> int
 {
-    std::cout <<"wersja 1.1\n----------------------------\n|  Witaj w Dungeon Escape  |\n|          graj            |\n|          exit            |\n----------------------------\n>> ";
+    std::cout <<"wersja 1.3\n----------------------------\n|  Witaj w Dungeon Escape  |\n|          graj            |\n|          exit            |\n----------------------------\n>> ";
     std::string wybor;
     std::cin >> wybor;
 
@@ -100,10 +102,7 @@ struct postac
 
 std::string imie;
 
-auto Walka()-> int
-{
-    std::cout << "tutaj bedzie walka";
-}
+
 
 auto PrintStats(postac struktura, postac strukturaPrzeciwnik) -> void
 {
@@ -113,7 +112,52 @@ auto PrintStats(postac struktura, postac strukturaPrzeciwnik) -> void
     std::cout << "|  Obrona: " << struktura.defense << "           |     Obrona: " << strukturaPrzeciwnik.defense << std::endl;
 }
 
-//auto LvlUp (postac st)
+
+auto Walka(postac & gracz, postac & przeciwnik)-> int
+{
+        std::cout << "\n   ROZPOCZYNA SIE WALKA\n";
+        system("pause");
+        int damage_gracz = gracz.attack - przeciwnik.defense/2;                                   //obrazenia dzialaja na zasadzie wzoru | obrazenia = atak - obrona.przeciwnika/2
+        int damage_przeciwnik = przeciwnik.attack - gracz.defense/2;
+
+        //std::cout <<"\n\n" << damage_gracz <<std::endl<< damage_przeciwnik;
+        do
+        {   system("cls");
+            PrintStats(gracz, przeciwnik);
+            std::cout << std::endl << imie << " wyprowadza cios!\n\n";
+            przeciwnik.health -= damage_gracz;
+            system("pause");
+            system("cls");
+            PrintStats(gracz, przeciwnik);
+            std::cout << "Przeciwnik wyprowadza cios!\n\n";
+            gracz.health -= damage_przeciwnik;
+            system("pause");
+
+            if(gracz.health <=0)
+            {
+                std::cout << imie << " zostaje pokonany !!!\n               GAME OVER";
+            }
+        }while(przeciwnik.health >= 0);
+
+
+
+}
+
+
+auto LvlUp (postac & struktura) -> void
+{
+    std::cout << std::endl << std::endl << std::endl;
+    system("pause");
+    system("cls");
+    struktura.health = 100;
+    std::cout << "                 LVL UP \nTwoje zdrowie zostalo odnowione.\nWpisz 'atak' lub 'obrona', aby upelszyc statystyki\n>> ";
+    std::string decyzja = Decyzja("atak","obrona");
+    if(decyzja == "atak")
+        struktura.attack += 5;
+    else
+        struktura.defense += 5;
+
+}
 auto main() -> int
 {
 
@@ -132,7 +176,9 @@ auto main() -> int
     system("pause");
     system("cls");
     int atak = 0, obrona = 0, punkty = 10;
+    Pauza(1);
     std::cout << "Masz do dyspozycji 10 punktow umiejetnosci, rozdziel je madrze\n";
+    Pauza(1);
     std::cout << "Masz dostepne 2 glowne statystyki atak oraz obrone\nIle chcesz dac w atak: ";
     std::cin >> atak;
     std::cout << "Ile chcesz dac w obrone: ";
@@ -163,12 +209,36 @@ auto main() -> int
     // przeciwnik 1 Goblin //
     auto goblin = postac();
     goblin.health = 50;
-    goblin.attack = 3;
-    goblin.defense = 2;
+    goblin.attack = 5;
+    goblin.defense = 4;
+
+    // przeciwnik 2 Elf //
+    auto elf = postac();
+    elf.health = 0;
+    elf.attack = 0;
+    elf.defense = 0;
+
+    // przeciwnik 3 Bandyta //
+    auto bandyta = postac();
+    bandyta.health = 0;
+    bandyta.attack = 0;
+    bandyta.defense = 0;
+
+    // przeciwnik 4 Pajak Gigant //
+    auto pajak = postac();
+    pajak.health = 0;
+    pajak.attack = 0;
+    pajak.defense = 0;
+
+    // przeciwnik 5 BOSS (Gorski Golem)//
+    auto golem = postac();
+    golem.health = 0;
+    golem.attack = 0;
+    golem.defense = 0;
 
 
     system("cls");
-    int x = 0;  //czas pauzy w sekundach                                        // USTAWIC FINALNIE x = 3 !!!!!!!!!!!!!!!!!!!!!
+    int x = 3;  //czas pauzy w sekundach                                        // USTAWIC FINALNIE x = 3 !!!!!!!!!!!!!!!!!!!!!
 
     std::cout << "    Rozdzial 1\n\n\n";
     Pauza(x);
@@ -195,9 +265,8 @@ auto main() -> int
     system("pause");
     system("cls");
     PrintStats(gracz, goblin);
-
-
-
-
+    Walka(gracz, goblin);
+    LvlUp(gracz);
+    PrintStats(gracz, gracz);  //potem usunac ta linijke, ona jest tylko dla testu funkcji LVL UP
     return 0;
 }
