@@ -10,6 +10,7 @@
 - Funkcja walki (DONE)
 - Funkcja LVL Up. Odnawia zycie i mozesz dodac iles tam punktow do obrony lub ataku (DONE)
 - Kilka dodatkowych przeciwnikow (DONE)
+- Ustawic dobre wartowsci zmiennych w funkcji Walka() bo starcia sa za dlugie !!!!!!
 - Ustawić statystyki przeciwnikow tak aby dalo sie wygrac i przegrac (nie moze byc za latwo :))
 - Pomiedzy walkami jakis event w stylu znalazles skrzynke czy chcesz ja otworzyc? A w srodku jakis super przedmiot czy cos tam nw jeszcze
         Moze cos w stylu funkcji bonus event czy cos ale najpierw zrobic rzeczy wazne !
@@ -238,7 +239,7 @@ auto main() -> int
 
 
     system("cls");
-    int x = 3;  //czas pauzy w sekundach                                        // USTAWIC FINALNIE x = 3 !!!!!!!!!!!!!!!!!!!!!
+    int x = 0;  //czas pauzy w sekundach                                        // USTAWIC FINALNIE x = 3 !!!!!!!!!!!!!!!!!!!!!
 
     std::cout << "    Rozdzial 1\n\n\n";
     Pauza(x);
@@ -268,5 +269,9 @@ auto main() -> int
     Walka(gracz, goblin);
     LvlUp(gracz);
     PrintStats(gracz, gracz);  //potem usunac ta linijke, ona jest tylko dla testu funkcji LVL UP
+
+
+
+
     return 0;
 }
