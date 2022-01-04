@@ -191,7 +191,7 @@ auto LvlUp (postac & struktura) -> void
     {
         struktura.defense += 5;
         system("cls");
-        std::cout << "\n\n      (Dodano +5 atak oraz +50hp)";
+        std::cout << "\n\n      (Dodano +5 obrona oraz +50hp)";
         Pauza(czas+3);
     }
 
