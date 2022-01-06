@@ -16,6 +16,7 @@
 - Ustawic statystyki przeciwnikow tak aby dalo sie wygrac i przegrac (nie moze byc za latwo :)) (ALSO KINDA DONE)
 - Pomiedzy walkami jakis event w stylu znalazles skrzynke czy chcesz ja otworzyc? A w srodku jakis super przedmiot czy cos tam nw jeszcze
         Moze cos w stylu funkcji bonus event czy cos ale najpierw zrobic rzeczy wazne ! (DONE (opcja walki dodatkowej przy drzewie w 2 rozdziale))
+- Naprawic ten blad z imieniem !!!!!
 
                                                                Secondary TO DO List
 - Sprawdzic literowki itd
@@ -197,7 +198,7 @@ auto LvlUp (postac & struktura) -> void
         struktura.attack += 5;
         system("cls");
         std::cout << "\n\n      (Dodano +5 atak oraz +50hp)";
-        Pauza(czas+3);
+        Pauza(czas+1.5);
     }
 
     else
@@ -205,7 +206,7 @@ auto LvlUp (postac & struktura) -> void
         struktura.defense += 5;
         system("cls");
         std::cout << "\n\n      (Dodano +5 obrona oraz +50hp)";
-        Pauza(czas+3);
+        Pauza(czas+1.5);
     }
 
     system("cls");
@@ -226,15 +227,7 @@ auto main() -> int
 
     std::cout << "Podaj imie swojej postaci (jeden wyraz)\n>> ";
     std::cin >>  imie;
-    for(int i=0;i<imie.size();i++)
-    {
-        if(imie[i]==' ')
-        {
-            imie = "";
-            std::cout << "Wprowadz imie (JEDEN WYRAZ)";
-            std::cin >> imie;
-        }
-    }
+
     std::cout << "Pora ustawic statystyki twojej postaci\n\n";
     system("pause");
     system("cls");
@@ -243,8 +236,10 @@ auto main() -> int
     std::cout << "Masz do dyspozycji 10 punktow umiejetnosci, rozdziel je madrze\n";
     Pauza(czas);
     std::cout << "Masz dostepne 2 glowne statystyki atak oraz obrone\nIle chcesz dac w atak: ";
+    Pauza(czas);
     std::cin >> atak;
     std::cout << "Ile chcesz dac w obrone: ";
+    Pauza(czas);
     std::cin >> obrona;
     if(atak+obrona != 10)
     {
@@ -359,13 +354,15 @@ auto main() -> int
     Pauza(czas);
     std::cout << "Nagle zauwaza w oddali jakies swiatlo. Postanawiam isc w jego strone.\n\n";
     Pauza(czas);
-    std::cout << "To oboz bandytow ! Po lewej widac jednego z nich, ktory pilnuje mostu. Po prawej przepasc, ktora da sie przeskoczyc\n\n";
+    std::cout << "To oboz bandytow ! Po lewej widac most i straznika. Po prawej przepasc, ktora da sie przeskoczyc\n\n";
     Pauza(czas);
     std::cout << "Czy " << imie << " ma isc w lewo czy prawo?    Wpisz(lewo/prawo)\n>> ";
     if((Decyzja("lewo", "prawo")) == "prawo")
     {           //pojscie w prawo -10hp i walka
         system("cls");
-        std::cout << imie << " idzie w prawo. Przepasc jest wieksza niz sie wydawala.\n\n";
+        std::cout << imie << " idzie w prawo.\n\n";
+        Pauza(czas);
+        std::cout << "Przepasc jest wieksza niz sie wydawala.\n\n";
         Pauza(czas);
         std::cout << "SKOK !\n\n";
         Pauza(czas);
@@ -431,7 +428,9 @@ auto main() -> int
         system("cls");
         std::cout << "Nagle " << imie << " slysz cos nad glowa.\n\n";
         Pauza(czas);
-        std::cout <<"Patrzy w gore i dostrzega elfa, ktory pilnowal zwoju\n\n";
+        std::cout << "Patrzy w gore i dostrzega Elfa, ktory pilnowal pradawnego zwoju\n\n";
+        Pauza(czas);
+        std::cout << "Elf skacze do walki! \n\n";
         system("pause");
         system("cls");
         if((Walka(gracz, elf)) == -1)
@@ -449,7 +448,9 @@ auto main() -> int
         Pauza(czas);
         std::cout << "W oddali widac rowniez schody na kolejne pietro.\n\n";
         Pauza(czas);
-        std::cout << "Po chwili " << imie << " slyszy znowu jakis dzwiek, odwraca sie, a za plecami stoi Nieumarly, ktory rzuca do walki.\n\n";
+        std::cout << "Po chwili " << imie << " slyszy znowu jakis dzwiek.\n\n" ;
+        Pauza(czas);
+        std::cout << "odwraca sie, a za plecami stoi Nieumarly, ktory rzuca do walki.\n\n";
         system("pause");
         system("cls");
         if((Walka(gracz, nieumarly)) == -1)
