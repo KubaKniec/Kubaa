@@ -133,7 +133,7 @@ auto Walka(postac & gracz, postac & przeciwnik)-> int
     std::cout << "\n   ROZPOCZYNA SIE WALKA\n";
     system("pause");
     int damage_gracz = gracz.attack - przeciwnik.defense/3;                                   //obrazenia dzialaja na zasadzie wzoru | obrazenia = atak - obrona.przeciwnika/3
-    int damage_przeciwnik = przeciwnik.attack - gracz.defense/3;
+    int damage_przeciwnik = przeciwnik.attack - gracz.defense/3;                              // dzielenie na 3 wprowadza pewna losowosc bo operujemy na int'ach
     int tura = 0;
     //std::cout <<"\n\n" << damage_gracz <<std::endl<< damage_przeciwnik;
     do
@@ -155,6 +155,7 @@ auto Walka(postac & gracz, postac & przeciwnik)-> int
             std::cout << "  Tura " << tura << std::endl;
             PrintStats(gracz, przeciwnik);
             std::cout << "\nWrog zostal pokonany\n\n\n";
+            system("pause");
             break;
         }
 
