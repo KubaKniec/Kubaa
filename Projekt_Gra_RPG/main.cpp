@@ -12,10 +12,10 @@
 - Funkcja walki (DONE)
 - Funkcja LVL Up. Odnawia zycie i mozesz dodac iles tam punktow do obrony lub ataku (DONE)
 - Kilka dodatkowych przeciwnikow (DONE)
-- Ustawic dobre wartowsci zmiennych w funkcji Walka() bo starcia sa za dlugie !!!!!!
-- Ustawiæ statystyki przeciwnikow tak aby dalo sie wygrac i przegrac (nie moze byc za latwo :))
+- Ustawic dobre wartowsci zmiennych w funkcji Walka() bo starcia sa za dlugie !!!!!! (KINDA DONE)
+- Ustawic statystyki przeciwnikow tak aby dalo sie wygrac i przegrac (nie moze byc za latwo :)) (ALSO KINDA DONE)
 - Pomiedzy walkami jakis event w stylu znalazles skrzynke czy chcesz ja otworzyc? A w srodku jakis super przedmiot czy cos tam nw jeszcze
-        Moze cos w stylu funkcji bonus event czy cos ale najpierw zrobic rzeczy wazne !
+        Moze cos w stylu funkcji bonus event czy cos ale najpierw zrobic rzeczy wazne ! (DONE (opcja walki dodatkowej przy drzewie w 2 rozdziale))
 
                                                                Secondary TO DO List
 - Sprawdzic literowki itd
@@ -27,13 +27,13 @@
 // zmienne globalne
 
 std::string imie = "";
-int czas = 1.5;  //czas pauzy w sekundach  |   USTAWIC FINALNIE czas = 3 !!!!!
+int czas = 0;  //czas pauzy w sekundach  |   USTAWIC FINALNIE czas = 3 !!!!!
 
 
 
 auto MenuGlowne() -> int
 {
-    std::cout <<"wersja 1.5\n----------------------------\n|  Witaj w Dungeon Escape  |\n|          graj            |\n|          exit            |\n----------------------------\n>> ";
+    std::cout <<"wersja 1.6\n----------------------------\n|  Witaj w Dungeon Escape  |\n|          graj            |\n|          exit            |\n----------------------------\n>> ";
     std::string wybor;
     std::cin >> wybor;
 
@@ -149,6 +149,15 @@ auto Walka(postac & gracz, postac & przeciwnik)-> int
         system("pause");
         system("cls");
 
+        if(przeciwnik.health <= 0)
+        {
+            system("cls");
+            std::cout << "  Tura " << tura << std::endl;
+            PrintStats(gracz, przeciwnik);
+            std::cout << "\nWrog zostal pokonany\n\n\n";
+            break;
+        }
+
         std::cout << "  Tura " << tura << std::endl;
         PrintStats(gracz, przeciwnik);
         std::cout << std::endl << "Przeciwnik wyprowadza cios!\n\n";
@@ -156,17 +165,20 @@ auto Walka(postac & gracz, postac & przeciwnik)-> int
         PlaySound(TEXT("Sound.wav"), NULL,SND_SYNC);
         system("pause");
 
-        if(gracz.health <=0)
+        if(gracz.health <= 0)
         {
+            system("cls");
+            std::cout << "  Tura " << tura << std::endl;
+            PrintStats(gracz, przeciwnik);
             std::cout << imie << " zostaje pokonany !!!\n";
             Pauza(czas);
-            std::cout << "               GAME OVER\n\n";
+            std::cout << "\n\n                   GAME OVER\n\n";
             system("pause");
             return -1;
         }
     }
     while(przeciwnik.health > 0);
-    std::cout << "\nWrog zostal pokonany\n\n\n";
+
     return 0;
 }
 
@@ -292,12 +304,19 @@ auto main() -> int
     pajak.attack = 10;
     pajak.defense = 6;
 
-    // przeciwnik 5 BOSS (Gorski Golem)//
-    auto golem = postac();
-    golem.name ="Gorski Golem";
-    golem.health = 0;
-    golem.attack = 0;
-    golem.defense = 0;
+    // przeciwnik 5 BOSS (Gorski Golem pierwsza faza)//
+    auto golem_pierwsza_faza = postac();
+    golem_pierwsza_faza.name ="Gorski Golem";
+    golem_pierwsza_faza.health = 90;
+    golem_pierwsza_faza.attack = 8;
+    golem_pierwsza_faza.defense = 15;
+
+    // przeciwnik 5.5 BOSS (Gorski Golem druga faza)//
+    auto golem_druga_faza = postac();
+    golem_druga_faza.name ="Oslabiony Gorski Golem";
+    golem_druga_faza.health = 40;
+    golem_druga_faza.attack = 8;
+    golem_druga_faza.defense = 15;
 
 
     system("cls");
@@ -470,16 +489,41 @@ auto main() -> int
 
     if((Walka(gracz, pajak)) == -1)
             return 0;
-    system("pause");
+    LvlUp(gracz);
+
     system("cls");
     std::cout << "Po dlugiej i wyczerpujacej walce " << imie << " wychodzi z gnizda Pajaka Giganta i idzie po schodach na kolejne pietro.\n\n";
+    std::cout << "Co czeka na ostatnim pietrze ? Przekonajmy sie.\n\n";
     system("pause");
-
-
-
     system("cls");
     std::cout << "    Rozdzial 3 ~ Final\n\n\n";
-    std::cout << "[Tutaj bedzie walka z bosem. I moze jeszcze cos ciekawego na koniec jeszcze zobacze :)]";
+    Pauza(czas);
+    std::cout << imie <<" wchodzi kolejne pietro lochow. To miejsce przypomina cos jakby arene do walki.\n\n";
+    Pauza(czas);
+    std::cout << "Nagle pod stopami czuje drgania. Odrwaca sie ...\n\n";
+    Pauza(czas);
+    std::cout << "Tuz za plecami stal gorski golem, poterzny wladca lochow.\n\n";
+    Pauza(czas);
+    std::cout << "Czy " << imie << " sobie poradzi ?!?\n\n";
+    system("pause");
+    system("cls");
+    if((Walka(gracz, golem_pierwsza_faza)) == -1)
+        return 0;
+
+    system("cls");
+    std::cout << "Golem pokonany.\n\n";
+    Pauza(czas);
+    std::cout << "Uff...\n\n";
+    Pauza(czas);
+    std::cout << "To byla ciezka walka.\n\n";
+    Pauza(czas);
+    std::cout << "Ale co to ?! Golem sie podnosi! Nie ma reki i ledwo chodzi, ale chyba jeszcze mu malo.\n\n";
+    Pauza(czas);
+    std::cout << imie << " staje do ponownego starcia, aby wydostac sie z lochow.\n\n";
+    system("pause");
+    system("cls");
+    if((Walka(gracz, golem_druga_faza)) == -1)
+        return 0;
 
 
     return 0;
