@@ -27,7 +27,7 @@
 // zmienne globalne
 
 std::string imie = "";
-int czas = 0;  //czas pauzy w sekundach  |   USTAWIC FINALNIE czas = 3 !!!!!
+int czas = 2.5;  //czas pauzy w sekundach  |   USTAWIC FINALNIE czas = 3 !!!!!
 
 
 
