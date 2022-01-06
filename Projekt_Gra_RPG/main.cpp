@@ -22,6 +22,7 @@
 - Sprawdzic literowki itd
 - Poprawic ogolny wyglad
 - Dodac dzwiek walki (DONE)
+- Dodac statystyki koncowe moze
 */
 
 
@@ -526,6 +527,19 @@ auto main() -> int
     system("cls");
     if((Walka(gracz, golem_druga_faza)) == -1)
         return 0;
+
+    system("cls");
+    std::cout << imie << " po ciezkiej walce czolga sie do wyjscia.\n\n";
+    Pauza(czas);
+    std::cout << "Wychodzi na gore i widzi piekny widok.\n\n";
+    Pauza(czas);
+    std::cout << "Ucieczka z lochow sie powiodla.\n\n";
+    Pauza(czas);
+    std::cout << imie << " oraz ja (narrator) dziekujemy Ci za gre.\n\n";
+    Pauza(czas);
+    std::cout << "\n\n\n\n\n                            autor: Jakub Kniec\n\n";
+    Pauza(czas);
+    system("pause");
 
 
     return 0;
