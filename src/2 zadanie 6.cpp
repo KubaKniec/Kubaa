@@ -16,11 +16,12 @@ struct student
 auto average_of(student A) -> float
 {
     int x = 0;
-    for(size_t i = 0; i < A.oceny.size(); i++)
+    for(int i = 0; i < A.oceny.size(); i++)
     {
         x = x + A.oceny[i];
     }
-    return float(x)/float(A.oceny.size());
+    auto wynik = float(x)/float(A.oceny.size());
+    return wynik;
 }
 
 auto get_best_student(std::vector<student> vec) -> student
