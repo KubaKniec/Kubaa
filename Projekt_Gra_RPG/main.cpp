@@ -2,7 +2,7 @@
 #include <string>
 #include "windows.h"
 #include <MMSystem.h>
-
+#include <conio.h>
 
 /*                                                                 TO DO List
 - funkcja menu glowne (DONE)
@@ -17,7 +17,6 @@
 - Pomiedzy walkami jakis event w stylu znalazles skrzynke czy chcesz ja otworzyc? A w srodku jakis super przedmiot czy cos tam nw jeszcze
         Moze cos w stylu funkcji bonus event czy cos ale najpierw zrobic rzeczy wazne ! (DONE (opcja walki dodatkowej przy drzewie w 2 rozdziale))
 - Naprawic ten blad z imieniem !!!!!
-
                                                                Secondary TO DO List
 - Sprawdzic literowki itd
 - Poprawic ogolny wyglad
@@ -28,8 +27,8 @@
 
 // zmienne globalne
 
-std::string imie = "";
-int czas = 2.5;  //czas pauzy w sekundach  |   USTAWIC FINALNIE czas = 3 !!!!!
+std::string imie;
+int czas = 0;  //czas pauzy w sekundach  |   USTAWIC FINALNIE czas = 3 !!!!!
 
 
 
@@ -147,7 +146,7 @@ auto Walka(postac & gracz, postac & przeciwnik)-> int
         PrintStats(gracz, przeciwnik);
         std::cout << std::endl << imie << " wyprowadza cios!\n\n";
         przeciwnik.health -= damage_gracz;
-        PlaySound(TEXT("Sound.wav"), NULL,SND_SYNC);
+//        PlaySound(TEXT("Sound.wav"), NULL,SND_SYNC);
         system("pause");
         system("cls");
 
@@ -165,7 +164,7 @@ auto Walka(postac & gracz, postac & przeciwnik)-> int
         PrintStats(gracz, przeciwnik);
         std::cout << std::endl << "Przeciwnik wyprowadza cios!\n\n";
         gracz.health -= damage_przeciwnik;
-        PlaySound(TEXT("Sound.wav"), NULL,SND_SYNC);
+        //   PlaySound(TEXT("Sound.wav"), NULL,SND_SYNC);
         system("pause");
 
         if(gracz.health <= 0)
@@ -214,6 +213,38 @@ auto LvlUp (postac & struktura) -> void
 
 
 }
+auto sprawdz(std::string txt) -> bool
+{
+    bool t;
+    for(int j=0; txt.size(); j++)
+    {
+        if(txt[j]==' ')
+        {
+            t=true;
+            break;
+        }
+        else
+            t=false;
+    }
+    return t;
+}
+
+auto wpisz_imie()-> std::string
+{
+    std::string txt;
+    std::cout << "Podaj imie swojej postaci\n>> ";
+    std::cin >> txt;
+    bool war = false;
+    while(sprawdz(txt)== war)                            ///  tutaj skonczylem
+    {
+        std::cout << "Blad, wpisz ponownie: ";
+        std::cin.ignore(1024, '\n');
+        std::cin >> txt;
+        war = sprawdz(txt);
+    }
+    return txt;
+}
+
 auto main() -> int
 {
 
@@ -226,8 +257,12 @@ auto main() -> int
 
     // Personalizacja postaci glownego bohatera gry //
 
-    std::cout << "Podaj imie swojej postaci (jeden wyraz)\n>> ";
-    std::cin >>  imie;
+    // std::cout << "Podaj imie swojej postaci (jeden wyraz)\n>> ";
+    // std::cin >> imie;
+    // std::cout << imie;
+
+    imie = wpisz_imie();
+
 
     std::cout << "Pora ustawic statystyki twojej postaci\n\n";
     system("pause");
@@ -319,7 +354,7 @@ auto main() -> int
     system("cls");
 
 
-                    // Prolog
+    // Prolog
     std::cout << "    Rozdzial 1\n\n\n";
     Pauza(czas);
     std::cout << imie <<" budzi sie na zimnej, kamiennej podlodze.\n\n";
@@ -336,7 +371,7 @@ auto main() -> int
     system("pause");
     system("cls");
 
-                        // Glowna gra
+    // Glowna gra
     std::cout << "Po chwili marszu " << imie << " dostrzega w cieniu jakas postac.\n\n";
     Pauza(czas);
     std::cout << "Z morku wylania sie Goblin. Niebezpieczna i smierdzaca postac zamieszkujaca te lochy\n\n";
@@ -359,7 +394,8 @@ auto main() -> int
     Pauza(czas);
     std::cout << "Czy " << imie << " ma isc w lewo czy prawo?    Wpisz(lewo/prawo)\n>> ";
     if((Decyzja("lewo", "prawo")) == "prawo")
-    {           //pojscie w prawo -10hp i walka
+    {
+        //pojscie w prawo -10hp i walka
         system("cls");
         std::cout << imie << " idzie w prawo.\n\n";
         Pauza(czas);
@@ -378,7 +414,8 @@ auto main() -> int
             return 0;
     }
     else
-    {           // pojscie w lewo walka
+    {
+        // pojscie w lewo walka
         system("cls");
         std::cout << imie << " idzie w lewo. Bandyta zorientowal sie ze ktos biegnie w jego strone i wyciaga bron.\n\n";
         Pauza(czas);
@@ -491,7 +528,7 @@ auto main() -> int
     system("cls");
 
     if((Walka(gracz, pajak)) == -1)
-            return 0;
+        return 0;
     LvlUp(gracz);
 
     system("cls");
