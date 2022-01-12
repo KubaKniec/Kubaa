@@ -263,9 +263,9 @@ auto main() -> int
     // przeciwnik 1 Goblin //
     auto goblin = postac();
     goblin.name = "Goblin";
-    goblin.health = 50; //50
-    goblin.attack = 99;//3
-    goblin.defense = 2;//2
+    goblin.health = 50;
+    goblin.attack = 3;
+    goblin.defense = 2;
 
     // przeciwnik 2 Bandyta //
     auto bandyta = postac();
