@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "windows.h"
+#include <Windows.h>
 #include <MMSystem.h>
 #include <conio.h>
 
@@ -13,10 +13,10 @@
 - Funkcja LVL Up. Odnawia zycie i mozesz dodac iles tam punktow do obrony lub ataku (DONE)
 - Kilka dodatkowych przeciwnikow (DONE)
 - Ustawic dobre wartowsci zmiennych w funkcji Walka() bo starcia sa za dlugie !!!!!! (KINDA DONE)
-- Ustawic statystyki przeciwnikow tak aby dalo sie wygrac i przegrac (nie moze byc za latwo :)) (ALSO KINDA DONE)
-- Pomiedzy walkami jakis event w stylu znalazles skrzynke czy chcesz ja otworzyc? A w srodku jakis super przedmiot czy cos tam nw jeszcze
+- Ustawic statystyki przeciwnikow tak aby dalo sie wygrac i przegrac (nie moze byc za latwo :)) (KINDA DONE)
+- Pomiedzy walkami jakis event w stylu znalazles skrzynke czy chcesz ja otworzyc? A w srodku jakis super przedmiot czy cos tam nw jeszcze (DONE)
         Moze cos w stylu funkcji bonus event czy cos ale najpierw zrobic rzeczy wazne ! (DONE (opcja walki dodatkowej przy drzewie w 2 rozdziale))
-- Naprawic ten blad z imieniem !!!!!
+- Naprawic ten blad z imieniem (DONE)
                                                                Secondary TO DO List
 - Sprawdzic literowki itd
 - Poprawic ogolny wyglad
@@ -29,49 +29,9 @@
 
 std::string imie;
 int czas = 0;  //czas pauzy w sekundach  |   USTAWIC FINALNIE czas = 3 !!!!!
+int total_dealt_dmg = 0, total_taken_dmg = 0, ilosc_wszystkich_tur = 0, stoczone_walki_liczba = 0;
 
 
-
-auto MenuGlowne() -> int
-{
-    std::cout <<"wersja 1.6\n----------------------------\n|  Witaj w Dungeon Escape  |\n|          graj            |\n|          exit            |\n----------------------------\n>> ";
-    std::string wybor;
-    std::cin >> wybor;
-
-    if(wybor == "graj")
-    {
-        system("cls");
-        return 1;
-    }
-    else if(wybor == "exit")
-        return -1;
-    else
-    {
-
-        while(wybor != "graj" || "exit")
-        {
-            wybor = "";
-            std::cin.clear();
-            std::cout << "Blad, wpisz ponownie\n>> ";
-            std::cin >> wybor;
-            std::cin.ignore(1024, '\n');
-            if(wybor == "graj")
-            {
-                system("cls");
-                return 1;
-                break;
-            }
-            else if(wybor == "exit")
-                return -1;
-        }
-    }
-}
-
-auto Pauza(int sekundy) -> void
-{
-    int milisekundy = sekundy * 1000;
-    Sleep(milisekundy);
-}
 
 auto Decyzja(std::string x, std::string y) -> std::string
 {
@@ -106,8 +66,29 @@ auto Decyzja(std::string x, std::string y) -> std::string
 
 
 
+auto MenuGlowne() -> int
+{
+    std::cout <<"\n   ----------------------------\n   |  Witaj w Dungeon Escape  |\n   |          graj            |\n   |          exit            |\n   ----------------------------\n\n >> ";
+    std::string wybor;
+    wybor = Decyzja("graj","exit");
+    if(wybor == "graj")
+    {
+        system("cls");
+        return 1;
+    }
+    else if(wybor == "exit")
+        return -1;
+}
 
-// struktura Bohatera gry oraz wszystkich przeciwnikow (maja takie same parametry) //
+auto Pauza(int sekundy) -> void
+{
+    int milisekundy = sekundy * 1000;
+    Sleep(milisekundy);
+}
+
+
+// struktura Bohatera gry oraz wszystkich przeciwnikow (maja takie same parametry)
+
 struct postac
 {
     std::string name;
@@ -118,7 +99,6 @@ struct postac
 };
 
 
-
 auto PrintStats(postac struktura, postac strukturaPrzeciwnik) -> void
 {
     std::cout << "|  "<<struktura.name<< "           |           "<<strukturaPrzeciwnik.name << std::endl;
@@ -127,26 +107,47 @@ auto PrintStats(postac struktura, postac strukturaPrzeciwnik) -> void
     std::cout << "|  Obrona: " << struktura.defense << "           |     Obrona: " << strukturaPrzeciwnik.defense << std::endl;
 }
 
+auto PrintFinalStats(postac gracz) -> void
+{
+    std::cout << "\n\n\nCzy chcesz zobaczyc swoje statystyki koncowe ?      (tak/nie)\n>> ";
+    if(Decyzja("tak","nie")=="tak")
+    {
+        system("cls");
+        std::cout << " ---------------Ogolne statystyki---------------\nCalkowite otrzymane obrazenia: "<< total_taken_dmg<<std::endl;
+        std::cout << " Całkowite zadane obrazenia: " << total_dealt_dmg<<std::endl;
+        std::cout << " Ilosc stoczonych walk: " << stoczone_walki_liczba<<std::endl;
+        std::cout << " Laczna liczba tur: " << ilosc_wszystkich_tur<<std::endl<<std::endl;
+        std::cout << " -----------Statystyki twojej postaci-----------"<<std::endl;
+        std::cout << " Imie postaci: "<<gracz.name<< std::endl;
+        std::cout << " Atak: " << gracz.attack<< std::endl;
+        std::cout << " Obrona: " << gracz.defense<< std::endl;
+    }
+    std::cout << std::endl << std::endl << std::endl;
+    system("pause");
+}
+
+
 
 auto Walka(postac & gracz, postac & przeciwnik)-> int
 {
 
     std::cout << "\n   ROZPOCZYNA SIE WALKA\n";
     system("pause");
+    stoczone_walki_liczba++;
     int damage_gracz = gracz.attack - przeciwnik.defense/3;                                   //obrazenia dzialaja na zasadzie wzoru | obrazenia = atak - obrona.przeciwnika/3
     int damage_przeciwnik = przeciwnik.attack - gracz.defense/3;                              // dzielenie na 3 wprowadza pewna losowosc bo operujemy na int'ach
     int tura = 0;
-    //std::cout <<"\n\n" << damage_gracz <<std::endl<< damage_przeciwnik;
     do
     {
-
         tura ++;
+        ilosc_wszystkich_tur++;
         system("cls");
         std::cout << "  Tura " << tura << std::endl;
         PrintStats(gracz, przeciwnik);
         std::cout << std::endl << imie << " wyprowadza cios!\n\n";
         przeciwnik.health -= damage_gracz;
-//        PlaySound(TEXT("Sound.wav"), NULL,SND_SYNC);
+        total_dealt_dmg += damage_gracz;
+        PlaySound(TEXT("Sound.wav"), NULL,SND_SYNC);
         system("pause");
         system("cls");
 
@@ -164,7 +165,8 @@ auto Walka(postac & gracz, postac & przeciwnik)-> int
         PrintStats(gracz, przeciwnik);
         std::cout << std::endl << "Przeciwnik wyprowadza cios!\n\n";
         gracz.health -= damage_przeciwnik;
-        //   PlaySound(TEXT("Sound.wav"), NULL,SND_SYNC);
+        total_taken_dmg += damage_przeciwnik;
+        PlaySound(TEXT("Sound.wav"), NULL,SND_SYNC);
         system("pause");
 
         if(gracz.health <= 0)
@@ -200,7 +202,6 @@ auto LvlUp (postac & struktura) -> void
         std::cout << "\n\n      (Dodano +5 atak oraz +50hp)";
         Pauza(czas+1.5);
     }
-
     else
     {
         struktura.defense += 5;
@@ -208,61 +209,21 @@ auto LvlUp (postac & struktura) -> void
         std::cout << "\n\n      (Dodano +5 obrona oraz +50hp)";
         Pauza(czas+1.5);
     }
-
     system("cls");
-
-
-}
-auto sprawdz(std::string txt) -> bool
-{
-    bool t;
-    for(int j=0; txt.size(); j++)
-    {
-        if(txt[j]==' ')
-        {
-            t=true;
-            break;
-        }
-        else
-            t=false;
-    }
-    return t;
-}
-
-auto wpisz_imie()-> std::string
-{
-    std::string txt;
-    std::cout << "Podaj imie swojej postaci\n>> ";
-    std::cin >> txt;
-    bool war = false;
-    while(sprawdz(txt)== war)                            ///  tutaj skonczylem
-    {
-        std::cout << "Blad, wpisz ponownie: ";
-        std::cin.ignore(1024, '\n');
-        std::cin >> txt;
-        war = sprawdz(txt);
-    }
-    return txt;
 }
 
 auto main() -> int
 {
-
     int zakonczyc = MenuGlowne();
 
-    {
-        if(zakonczyc == -1)
-            return 0;
-    }
+    if(zakonczyc == -1)
+        return 0;
 
     // Personalizacja postaci glownego bohatera gry //
 
-    // std::cout << "Podaj imie swojej postaci (jeden wyraz)\n>> ";
-    // std::cin >> imie;
-    // std::cout << imie;
-
-    imie = wpisz_imie();
-
+    std::cout << "Podaj imie swojej postaci\n>> ";
+    std::cin.ignore();
+    getline(std::cin, imie);
 
     std::cout << "Pora ustawic statystyki twojej postaci\n\n";
     system("pause");
@@ -292,8 +253,6 @@ auto main() -> int
     }
 
 
-
-
     /// postac gracza ///
     auto gracz = postac();
     gracz.name = imie;
@@ -304,9 +263,9 @@ auto main() -> int
     // przeciwnik 1 Goblin //
     auto goblin = postac();
     goblin.name = "Goblin";
-    goblin.health = 50;
-    goblin.attack = 3;
-    goblin.defense = 2;
+    goblin.health = 50; //50
+    goblin.attack = 99;//3
+    goblin.defense = 2;//2
 
     // przeciwnik 2 Bandyta //
     auto bandyta = postac();
@@ -381,7 +340,10 @@ auto main() -> int
     system("cls");
 
     if((Walka(gracz, goblin)) == -1)
+    {
+        PrintFinalStats(gracz);
         return 0;
+    }
 
     system("cls");
     std::cout << "Goblin zostal pokonany bez najmniejszego problemu.\n\n";
@@ -411,7 +373,10 @@ auto main() -> int
         system("pause");
         system("cls");
         if((Walka(gracz, bandyta)) == -1)
+        {
+            PrintFinalStats(gracz);
             return 0;
+        }
     }
     else
     {
@@ -423,7 +388,10 @@ auto main() -> int
         system("pause");
         system("cls");
         if((Walka(gracz, bandyta)) == -1)
+        {
+            PrintFinalStats(gracz);
             return 0;
+        }
     }
     LvlUp(gracz);
 
@@ -472,7 +440,10 @@ auto main() -> int
         system("pause");
         system("cls");
         if((Walka(gracz, elf)) == -1)
+        {
+            PrintFinalStats(gracz);
             return 0;
+        }
         system("cls");
 
 
@@ -492,7 +463,10 @@ auto main() -> int
         system("pause");
         system("cls");
         if((Walka(gracz, nieumarly)) == -1)
+        {
+            PrintFinalStats(gracz);
             return 0;
+        }
         LvlUp(gracz);
     }
     else                    // 'nie' powoduje ominiecie walki bonusowej i kontynuowanie rozgrywki
@@ -504,13 +478,16 @@ auto main() -> int
         Pauza(czas);
         std::cout << imie <<" uswiadamia sobie, ze to pietro lochow to nie zwykla polana, tylko gigantyczny cmentarz.\n\n";
         Pauza(czas);
-        std::cout << "W oddali widac rowniez schody na kolejne pietro./n/n";
+        std::cout << "W oddali widac rowniez schody na kolejne pietro.\n\n";
         Pauza(czas);
         std::cout << "Po chwili " << imie << " slyszy znowu jakis dzwiek, odwraca sie, a za plecami stoi Nieumarly (zombie), ktory rzuca do walki.\n\n";
         system("pause");
         system("cls");
         if((Walka(gracz, nieumarly)) == -1)
+        {
+            PrintFinalStats(gracz);
             return 0;
+        }
         LvlUp(gracz);
     }
 
@@ -528,7 +505,10 @@ auto main() -> int
     system("cls");
 
     if((Walka(gracz, pajak)) == -1)
+    {
+        PrintFinalStats(gracz);
         return 0;
+    }
     LvlUp(gracz);
 
     system("cls");
@@ -548,7 +528,10 @@ auto main() -> int
     system("pause");
     system("cls");
     if((Walka(gracz, golem_pierwsza_faza)) == -1)
+    {
+        PrintFinalStats(gracz);
         return 0;
+    }
 
     system("cls");
     std::cout << "Golem pokonany.\n\n";
@@ -563,7 +546,10 @@ auto main() -> int
     system("pause");
     system("cls");
     if((Walka(gracz, golem_druga_faza)) == -1)
+    {
+        PrintFinalStats(gracz);
         return 0;
+    }
 
     system("cls");
     std::cout << imie << " po ciezkiej walce czolga sie do wyjscia.\n\n";
@@ -573,9 +559,8 @@ auto main() -> int
     std::cout << "Ucieczka z lochow sie powiodla.\n\n";
     Pauza(czas);
     std::cout << imie << " oraz ja (narrator) dziekujemy Ci za gre.\n\n";
-    Pauza(czas);
-    std::cout << "\n\n\n\n\n                            autor: Jakub Kniec\n\n";
-    Pauza(czas);
+    PrintFinalStats(gracz);
+    std::cout<<std::endl;
     system("pause");
 
 
