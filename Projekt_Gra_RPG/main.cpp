@@ -21,7 +21,7 @@
 - Sprawdzic literowki itd
 - Poprawic ogolny wyglad
 - Dodac dzwiek walki (DONE)
-- Dodac statystyki koncowe moze
+- Dodac statystyki koncowe moze (DONE)
 */
 
 
