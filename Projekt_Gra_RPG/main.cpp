@@ -1,6 +1,6 @@
 #include <iostream>
-#include <string>
 #include <Windows.h>
+#include <string>
 #include <MMSystem.h>
 #include <conio.h>
 
@@ -28,7 +28,7 @@
 // zmienne globalne
 
 std::string imie;
-int czas = 0;  //czas pauzy w sekundach  |   USTAWIC FINALNIE czas = 3 !!!!!
+int czas = 1.5;  //czas pauzy w sekundach  |   USTAWIC FINALNIE czas = 3 lub 2
 int total_dealt_dmg = 0, total_taken_dmg = 0, ilosc_wszystkich_tur = 0, stoczone_walki_liczba = 0;
 
 
@@ -113,8 +113,8 @@ auto PrintFinalStats(postac gracz) -> void
     if(Decyzja("tak","nie")=="tak")
     {
         system("cls");
-        std::cout << " ---------------Ogolne statystyki---------------\nCalkowite otrzymane obrazenia: "<< total_taken_dmg<<std::endl;
-        std::cout << " Całkowite zadane obrazenia: " << total_dealt_dmg<<std::endl;
+        std::cout << " ---------------Ogolne statystyki---------------\n Calkowite otrzymane obrazenia: "<< total_taken_dmg<<std::endl;
+        std::cout << " Calkowite zadane obrazenia: " << total_dealt_dmg<<std::endl;
         std::cout << " Ilosc stoczonych walk: " << stoczone_walki_liczba<<std::endl;
         std::cout << " Laczna liczba tur: " << ilosc_wszystkich_tur<<std::endl<<std::endl;
         std::cout << " -----------Statystyki twojej postaci-----------"<<std::endl;
@@ -147,7 +147,8 @@ auto Walka(postac & gracz, postac & przeciwnik)-> int
         std::cout << std::endl << imie << " wyprowadza cios!\n\n";
         przeciwnik.health -= damage_gracz;
         total_dealt_dmg += damage_gracz;
-        PlaySound(TEXT("Sound.wav"), NULL,SND_SYNC);
+        //PlaySound(TEXT("Sound.wav"),NULL,SND_SYNC);
+        PlaySound(TEXT("Sound.wav"), NULL, SND_FILENAME | SND_ASYNC);
         system("pause");
         system("cls");
 
@@ -166,7 +167,8 @@ auto Walka(postac & gracz, postac & przeciwnik)-> int
         std::cout << std::endl << "Przeciwnik wyprowadza cios!\n\n";
         gracz.health -= damage_przeciwnik;
         total_taken_dmg += damage_przeciwnik;
-        PlaySound(TEXT("Sound.wav"), NULL,SND_SYNC);
+        //PlaySound(TEXT("Sound.wav"), NULL,SND_SYNC);
+        PlaySound(TEXT("Sound.wav"), NULL, SND_FILENAME | SND_ASYNC);
         system("pause");
 
         if(gracz.health <= 0)
@@ -224,6 +226,12 @@ auto main() -> int
     std::cout << "Podaj imie swojej postaci\n>> ";
     std::cin.ignore();
     getline(std::cin, imie);
+    while(imie=="")
+    {
+        std::cout << "Blad, wpisz ponownie\n>> ";
+        std::cin.ignore();
+        getline(std::cin, imie);
+    }
 
     std::cout << "Pora ustawic statystyki twojej postaci\n\n";
     system("pause");
